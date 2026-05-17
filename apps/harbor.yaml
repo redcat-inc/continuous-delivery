@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/redcat-inc/continious-delivery'
+    targetRevision: master
+    path: charts/harbor-helm
+    helm:
+      values: |
+        expose:
+          type: ingress
+          tls:
+            enabled: false # Disable TLS
+          ingress:
+            hosts:
+              core: harbor.lab.com
+            className: "nginx"
+            annotations:
+              # Remove SSL redirect annotations for HTTP-only traffic
+              nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        externalURL: http://harbor.lab.com # Change to HTTP
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: harbor
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

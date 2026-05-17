@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/redcat-inc/continious-delivery'
+    targetRevision: HEAD # Assuming you want the latest from your repo. You can pin a specific branch or commit.
+    path: charts/ingress-nginx
+    helm:
+      values: |
+        controller:
+          service:
+            type: NodePort
+            nodePorts:
+              http: 30080 # Example HTTP NodePort
+              https: 30443 # Example HTTPS NodePort
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: ingress-nginx
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
