@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/redcat-inc/continious-delivery'
+    repoURL: 'https://github.com/redcat-inc/continuous-delivery'
     targetRevision: HEAD # Assuming you want the latest from your repo. You can pin a specific branch or commit.
     path: charts/ingress-nginx
     helm:

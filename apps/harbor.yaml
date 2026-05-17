@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/redcat-inc/continious-delivery'
+    repoURL: 'https://github.com/redcat-inc/continuous-delivery'
     targetRevision: master
     path: charts/harbor-helm
     helm:
