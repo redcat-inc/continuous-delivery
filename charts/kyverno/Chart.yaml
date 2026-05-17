@@ -1,0 +1,4 @@
+apiVersion: v2
+name: kyverno
+description: A Helm chart for Kyverno
+version: 0.1.0

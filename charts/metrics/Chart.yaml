@@ -1,0 +1,4 @@
+apiVersion: v2
+name: metrics
+description: A Helm chart for the metrics stack
+version: 0.1.0
