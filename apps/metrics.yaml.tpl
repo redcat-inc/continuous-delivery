@@ -1,20 +1,27 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metrics
+  name: metrics-server
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/redcat-inc/continious-delivery'
-    targetRevision: master
-    path: charts/metrics
+    repoURL: 'https://kubernetes-sigs.github.io/metrics-server/'
+    chart: metrics-server
+    targetRevision: 3.12.2
+    helm:
+      values: |
+        args:
+          - --cert-dir=/tmp
+          - --secure-port=4443
+          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+          - --kubelet-use-node-status-port
+          - --metric-resolution=15s
+          - --kubelet-insecure-tls
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: metrics
+    namespace: kube-system
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
