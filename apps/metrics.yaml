@@ -12,7 +12,7 @@ spec:
     helm:
       values: |
         hostNetwork:
-          enabled: true
+          enabled: false
         args:
           - --cert-dir=/tmp
           - --secure-port=4443
