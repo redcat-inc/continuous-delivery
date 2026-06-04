@@ -13,13 +13,10 @@ spec:
       values: |
         hostNetwork:
           enabled: true
+        containerPort: 4443
         args:
-          - --cert-dir=/tmp
-          - --secure-port=4443
-          - --kubelet-preferred-address-types=InternalIP
-          - --kubelet-use-node-status-port
-          - --metric-resolution=15s
           - --kubelet-insecure-tls
+          - --kubelet-preferred-address-types=InternalIP
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: kube-system
